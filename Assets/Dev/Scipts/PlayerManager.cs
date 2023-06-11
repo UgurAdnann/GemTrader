@@ -10,13 +10,10 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region Variables for Input
-    private bool isTouch, isMove = true;
+    private bool isTouch, isWalking;
     [HideInInspector] public float forwardSpeed, rotateSpeed;
     [SerializeField] private float initialForwardSpeed, initialRotateSpeed;
-    private Rigidbody rb;
-    [SerializeField] private VariableJoystick joyStick; //Karakter içerisine yazýlýr. Canvastaki variable joystick içine atýlýr
-    //Rot
-    private float PreviousXPos, PreviousZPos, nextXPos, nextZPos;
+    [SerializeField] private VariableJoystick joyStick;
     private CharacterController chrController;
     #endregion
 
@@ -43,48 +40,40 @@ public class PlayerManager : MonoBehaviour
     #region Input System
     private void InputListener()
     {
-        if (isMove)
+        if (Input.GetMouseButtonUp(0))
         {
-            if (Input.GetMouseButtonUp(0))
-            {
-                isTouch = false;
+            isTouch = false;
+            isWalking = false;
+            chrAnimator.SetBool("Run", false);
+        }
 
-                chrAnimator.SetBool("Run",false);
-            }
-
-            if (isTouch)
-            {
-                chrController.Move(new Vector3(joyStick.Direction.x, 0, joyStick.Direction.y) * forwardSpeed * Time.deltaTime);
-                SetRot();
-            }
-            if (Input.GetMouseButton(0))
-            {
-                isTouch = true;
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-                chrAnimator.SetBool("Run", true);
-
-            }
-
+        if (isTouch)
+        {
+            chrController.Move(new Vector3(joyStick.Direction.x, 0, joyStick.Direction.y) * forwardSpeed * Time.deltaTime);
+            SetRot();
+        }
+        if (Input.GetMouseButton(0))
+        {
+            isTouch = true;
         }
     }
 
     private void SetRot()
     {
-        PreviousXPos = transform.position.x;
-        PreviousZPos = transform.position.z;
-
-        transform.forward = Vector3.Lerp(transform.forward, new Vector3(PreviousXPos - nextXPos, 0, PreviousZPos - nextZPos), rotateSpeed);
+        transform.forward = Vector3.Lerp(transform.forward, new Vector3(joyStick.Direction.x, 0, joyStick.Direction.y), rotateSpeed);
 
         //Hareket yoksa walk anim oynamamasý için eklendi(titriyor)
-         if (PreviousXPos - nextXPos != 0 || PreviousZPos - nextZPos != 0)
-             chrAnimator.SetBool("Run", true);
-         else
-             chrAnimator.SetBool("Run", false);
-        nextXPos = transform.position.x;
-        nextZPos = transform.position.z;
+        if (!isWalking)
+        {
+        if (joyStick.Direction.x != 0 || joyStick.Direction.y != 0)
+            {
+                chrAnimator.SetBool("Run", true);
+                isWalking = true;
+            }
+        else if (joyStick.Direction.x == 0 && joyStick.Direction.y == 0)
+                chrAnimator.SetBool("Run", false);
 
+        }
     }
 
     #endregion
