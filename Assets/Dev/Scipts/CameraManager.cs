@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    #region Variable for Follow
     private Vector3 targetDistance;
     public float followSpeed;
     private Transform target;
+    #endregion
 
-
+    private void Awake()
+    {
+        ObjectManager.CameraManager = this;
+    }
     void Start()
     {
         target = ObjectManager.PlayerManager.transform;

@@ -7,6 +7,8 @@ public class PlayerManager : MonoBehaviour
     #region Variables for General
     private CharacterManager chrManager;
     private Animator chrAnimator;
+    private Transform currentGem;
+    [HideInInspector] public GameObject stackPos;
     #endregion
 
     #region Variables for Input
@@ -28,6 +30,7 @@ public class PlayerManager : MonoBehaviour
         chrAnimator = chrManager.animator;
         chrController = GetComponent<CharacterController>();
 
+        stackPos = transform.GetChild(1).gameObject;
         forwardSpeed = initialForwardSpeed;
         rotateSpeed = initialRotateSpeed;
     }
@@ -76,5 +79,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Collisions
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Gem"))
+        {
+            other.GetComponent<GemController>().CollectGem();
+        }
+    }
     #endregion
 }

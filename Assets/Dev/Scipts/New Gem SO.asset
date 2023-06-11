@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67859706f3ddc345b96fe1b4c0547e6, type: 3}
+  m_Name: New Gem SO
+  m_EditorClassIdentifier: 
+  gemProperties:
+  - name: Green Gem
+    startPrice: 80
+    Icon: {fileID: 21300000, guid: b38054b2c0a840745acf2a65d9aebaeb, type: 3}
+    gemPrefab: {fileID: 1250575752777289632, guid: 15d543f40dbc7614e88c5158e5ede614, type: 3}
+  - name: Pink Gem
+    startPrice: 100
+    Icon: {fileID: 21300000, guid: d73d049919889f946adb3621faf72044, type: 3}
+    gemPrefab: {fileID: 7881072463234562723, guid: a7d51ca4a2b382647a40118d2c9c8dfa, type: 3}
+  - name: Yellow Gem
+    startPrice: 120
+    Icon: {fileID: 21300000, guid: 46d250cb66cd4c843bedf5e6ad4d9684, type: 3}
+    gemPrefab: {fileID: 2049533749526525162, guid: 1d2ab0ae5b3da4c4681a0fc33977a965, type: 3}
