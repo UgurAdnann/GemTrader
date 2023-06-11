@@ -9,7 +9,7 @@ public class GemController : MonoBehaviour
     public GemSO gemSO;
     public GemSO.GemProperties gemProperties;
     private PlayerManager playerManager;
-    [HideInInspector] public GameObject grid;
+    [HideInInspector] public GridManager gridManager;
     private Transform stackedGems;
     #endregion
 
@@ -31,26 +31,33 @@ public class GemController : MonoBehaviour
         StackFollow();
     }
 
-    public void StartEvents(GameObject tempGrid, int gemNum) //Called from grid manager
+    public void StartEvents(GridManager tempGrid, int gemNum) //Called from grid manager
     {
-        grid = tempGrid;
-        transform.DOScale(Vector3.one, 5).SetEase(Ease.Linear).SetId(0);
+        gridManager = tempGrid;
+        transform.DOScale(Vector3.one, gemSO.growthTime).SetEase(Ease.Linear).SetId(0);
         gemProperties = gemSO.gemProperties[gemNum];
     }
 
     public void CollectGem()
     {
         if (transform.localScale.x >= gemSO.minCollectSize)
-        {
-            DOTween.Kill(this.transform,false);
-            transform.SetParent(stackedGems);
-            followSiblingIndex = transform.GetSiblingIndex();
-            if (followSiblingIndex != 0)
-                followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
+            StartCoroutine(WaitCollectGem());
+    }
 
-            GetComponent<Collider>().enabled = false;
-            transform.DOJump(playerManager.stackPos.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState=GemState.Collectted);
-        }
+    IEnumerator WaitCollectGem()
+    {
+        DOTween.Kill(this.transform, false);
+        transform.SetParent(stackedGems);
+        followSiblingIndex = transform.GetSiblingIndex();
+
+        if (followSiblingIndex != 0)
+            followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
+
+        GetComponent<Collider>().enabled = false;
+        transform.DOJump(playerManager.stackPos.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState = GemState.Collectted);
+        
+        yield return new WaitForSeconds(gemSO.reCreateDelay);
+        gridManager.CreateGem();
     }
 
     private void StackFollow()

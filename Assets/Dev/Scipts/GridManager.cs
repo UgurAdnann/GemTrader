@@ -19,12 +19,12 @@ public class GridManager : MonoBehaviour
         CreateGem();
     }
 
-    private void CreateGem()
+    public void CreateGem()
     {
         rndGem = Random.Range(0, gemSO.gemProperties.Length);
         GameObject newGem = Instantiate(gemSO.gemProperties[rndGem].gemPrefab);
         newGem.transform.SetParent(gems);
         newGem.transform.position = transform.position;
-        newGem.GetComponent<GemController>().StartEvents(gameObject, rndGem);
+        newGem.GetComponent<GemController>().StartEvents(this, rndGem);
     }
 }

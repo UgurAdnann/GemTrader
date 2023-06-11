@@ -25,3 +25,7 @@ MonoBehaviour:
     startPrice: 120
     Icon: {fileID: 21300000, guid: 46d250cb66cd4c843bedf5e6ad4d9684, type: 3}
     gemPrefab: {fileID: 2049533749526525162, guid: 1d2ab0ae5b3da4c4681a0fc33977a965, type: 3}
+  minCollectSize: 0.25
+  followSpeed: 15
+  growthTime: 15
+  reCreateDelay: 2.5

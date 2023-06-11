@@ -5,4 +5,5 @@ public enum GemState
 {
     Grid,
     Collectted,
+    Sold,
 }
