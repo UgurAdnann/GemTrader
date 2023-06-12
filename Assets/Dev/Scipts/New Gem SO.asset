@@ -29,3 +29,5 @@ MonoBehaviour:
   followSpeed: 15
   growthTime: 15
   reCreateDelay: 2.5
+  sellDelay: 0.1
+  sellMoveDelay: 0.25

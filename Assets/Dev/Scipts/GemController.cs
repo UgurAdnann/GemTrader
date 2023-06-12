@@ -9,8 +9,8 @@ public class GemController : MonoBehaviour
     public GemSO gemSO;
     public GemSO.GemProperties gemProperties;
     private PlayerManager playerManager;
+    private CanvasManager canvasManager;
     [HideInInspector] public GridManager gridManager;
-    private Transform stackedGems;
     #endregion
 
     #region Variables for Gem
@@ -23,7 +23,7 @@ public class GemController : MonoBehaviour
     void Start()
     {
         playerManager = ObjectManager.PlayerManager;
-        stackedGems = GameObject.FindGameObjectWithTag("StackedGems").transform;
+        canvasManager = ObjectManager.CanvasManager;
     }
 
     private void Update()
@@ -38,6 +38,7 @@ public class GemController : MonoBehaviour
         gemProperties = gemSO.gemProperties[gemNum];
     }
 
+    #region Collect Gem
     public void CollectGem()
     {
         if (transform.localScale.x >= gemSO.minCollectSize)
@@ -47,14 +48,15 @@ public class GemController : MonoBehaviour
     IEnumerator WaitCollectGem()
     {
         DOTween.Kill(this.transform, false);
-        transform.SetParent(stackedGems);
+        transform.SetParent(playerManager. stackedGems);
         followSiblingIndex = transform.GetSiblingIndex();
-
         if (followSiblingIndex != 0)
             followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
+        else
+            followObject = playerManager.stackPos;
 
         GetComponent<Collider>().enabled = false;
-        transform.DOJump(playerManager.stackPos.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState = GemState.Collectted);
+        transform.DOJump(followObject.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState = GemState.Collectted);
         
         yield return new WaitForSeconds(gemSO.reCreateDelay);
         gridManager.CreateGem();
@@ -65,10 +67,30 @@ public class GemController : MonoBehaviour
         if (gemState.Equals(GemState.Collectted))
         {
             if(followSiblingIndex.Equals(0))
-                transform.position = Vector3.Lerp(transform.position, playerManager.stackPos.transform.position, gemSO.followSpeed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, followObject.transform.position, gemSO.followSpeed * Time.deltaTime);
             else
                 transform.position = Vector3.Lerp(transform.position, followObject.transform.position+Vector3.up* followObject.transform.localScale.y, gemSO.followSpeed * Time.deltaTime);
         }
     }
+    #endregion
 
+    #region Sell Gem
+
+    public void SellGem(Transform sellArea)
+    {
+        StartCoroutine(WaitSellGem(sellArea));
+    }
+
+    IEnumerator WaitSellGem(Transform sellArea)
+    {
+        gemState = GemState.Sold;
+        transform.SetParent(null);
+        transform.DOJump(sellArea.position, 1, 0, gemSO.sellMoveDelay);
+        yield return new WaitForSeconds(gemSO.sellMoveDelay);
+        DOTween.Kill(this);
+        Destroy(this.gameObject);
+        canvasManager.money += gemProperties.startPrice * transform.localScale.x;
+        canvasManager.SetMoney();
+    }
+    #endregion
 }

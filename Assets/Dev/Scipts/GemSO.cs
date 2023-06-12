@@ -14,5 +14,6 @@ public class GemSO : ScriptableObject
         public GameObject gemPrefab;
     }
     public GemProperties[] gemProperties;
-    public float minCollectSize, followSpeed, growthTime, reCreateDelay;
+    public float minCollectSize, followSpeed, growthTime;
+    public float reCreateDelay, sellDelay, sellMoveDelay;
 }

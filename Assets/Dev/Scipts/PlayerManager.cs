@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     #region Variables for General
+    public GemSO gemso;
     private CharacterManager chrManager;
     private Animator chrAnimator;
     private Transform currentGem;
@@ -19,6 +20,14 @@ public class PlayerManager : MonoBehaviour
     private CharacterController chrController;
     #endregion
 
+    #region Variables for Gem
+    private GameObject tempSoldGem;
+    [HideInInspector] public Transform stackedGems;
+    Coroutine sellCoroutine;
+    private bool isSelling;
+    private Transform sellArea;
+    #endregion
+
 
     private void Awake()
     {
@@ -29,6 +38,9 @@ public class PlayerManager : MonoBehaviour
         chrManager = ObjectManager.ChrManager;
         chrAnimator = chrManager.animator;
         chrController = GetComponent<CharacterController>();
+        stackedGems = GameObject.FindGameObjectWithTag("StackedGems").transform;
+
+        sellCoroutine = StartCoroutine(WaitSell());
 
         stackPos = transform.GetChild(1).gameObject;
         forwardSpeed = initialForwardSpeed;
@@ -68,12 +80,12 @@ public class PlayerManager : MonoBehaviour
         //Hareket yoksa walk anim oynamamasý için eklendi(titriyor)
         if (!isWalking)
         {
-        if (joyStick.Direction.x != 0 || joyStick.Direction.y != 0)
+            if (joyStick.Direction.x != 0 || joyStick.Direction.y != 0)
             {
                 chrAnimator.SetBool("Run", true);
                 isWalking = true;
             }
-        else if (joyStick.Direction.x == 0 && joyStick.Direction.y == 0)
+            else if (joyStick.Direction.x == 0 && joyStick.Direction.y == 0)
                 chrAnimator.SetBool("Run", false);
 
         }
@@ -88,6 +100,38 @@ public class PlayerManager : MonoBehaviour
         {
             other.GetComponent<GemController>().CollectGem();
         }
+        if (other.CompareTag("SellArea"))
+        {
+            isSelling = true;
+            sellArea = other.transform;
+            StartCoroutine(WaitSell());
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SellArea"))
+        {
+            isSelling = false;
+        }
+
+    }
+    #endregion
+
+    #region Numerators
+
+    IEnumerator WaitSell()
+    {
+        yield return new WaitForSeconds(gemso.sellDelay);
+        if (stackedGems.childCount > 0)
+        {
+            tempSoldGem = stackedGems.GetChild(stackedGems.childCount - 1).gameObject;
+            tempSoldGem.GetComponent<GemController>().SellGem(sellArea);
+            if (isSelling)
+                StartCoroutine(WaitSell());
+            else
+                StopCoroutine(sellCoroutine);
+        }
+
     }
     #endregion
 }

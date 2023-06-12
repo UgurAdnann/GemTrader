@@ -8,6 +8,7 @@ public static class ObjectManager
     public static CharacterManager ChrManager;
     public static CameraManager CameraManager;
     public static GridSpawner GridSpawner;
+    public static CanvasManager CanvasManager;
     #endregion
 
 }
