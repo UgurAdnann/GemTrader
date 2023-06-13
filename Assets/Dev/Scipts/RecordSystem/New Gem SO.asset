@@ -35,4 +35,4 @@ MonoBehaviour:
   sellDelay: 0.1
   sellMoveDelay: 0.25
   gemUIPrefab: {fileID: 3287377097788397153, guid: bf2ee28e57fb3324d8eea39d82394b71, type: 3}
-  money: 20
+  money: 0

@@ -30,8 +30,8 @@ public class GemUIController : MonoBehaviour
 
     public void SetCountText(int addValue)
     {
-        gemSO.gemProperties[index].CollectCount = collectCount;
         collectCount += addValue;
+        gemSO.gemProperties[index].CollectCount = collectCount;
         transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Count: " + collectCount;
 
     }
