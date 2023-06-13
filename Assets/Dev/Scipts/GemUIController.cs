@@ -7,6 +7,7 @@ public class GemUIController : MonoBehaviour
     public GemSO gemSO;
     private PlayerManager playerManager;
     public int collectCount;
+    private int index;
 
     void Start()
     {
@@ -18,15 +19,18 @@ public class GemUIController : MonoBehaviour
 
     }
 
-    public void SetGemInformation(int index)
+    public void SetGemInformation(int gemNum)
     {
+        index = gemNum;
         transform.GetChild(0).GetComponent<Image>().sprite = gemSO.gemProperties[index].Icon;
         transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Type: " + gemSO.gemProperties[index].name.ToString();
+        collectCount = gemSO.gemProperties[index].CollectCount;
         transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Count: " + collectCount;
     }
 
     public void SetCountText(int addValue)
     {
+        gemSO.gemProperties[index].CollectCount = collectCount;
         collectCount += addValue;
         transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Count: " + collectCount;
 

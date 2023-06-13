@@ -7,3 +7,5 @@ public enum GemState
     Collectted,
     Sold,
 }
+
+

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GemPanelController : MonoBehaviour
 {
@@ -32,10 +33,33 @@ public class GemPanelController : MonoBehaviour
             newGemUI.transform.SetParent(transform.GetChild(0));
             newGemUI.GetComponent<GemUIController>().SetGemInformation(i);
         }
+        transform.localScale = Vector3.zero;
+        gameObject.SetActive(false);
     }
 
-    void Update()
+    public void CloseGemPanel()
     {
-        
+        StartCoroutine(WaitCloseGemPanel());
+    }
+
+    IEnumerator WaitCloseGemPanel()
+    {
+        transform.DOScale(Vector3.zero, 0.3f);
+        yield return new WaitForSeconds(0.3f);
+        DOTween.Complete(this);
+        gameObject.SetActive(false);
+    }
+
+    public void OpenGemPanel()
+    {
+        StartCoroutine(WaitOpenGemPanel());
+    }
+    IEnumerator WaitOpenGemPanel()
+    {
+        transform.DOScale(Vector3.one*1.2f, 0.5f).SetId(3);
+        yield return new WaitForSeconds(0.5f);
+        DOTween.Complete(3);
+        transform.DOScale(Vector3.one, 0.2f);
+        print("Open");
     }
 }

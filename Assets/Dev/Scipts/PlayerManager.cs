@@ -28,7 +28,6 @@ public class PlayerManager : MonoBehaviour
     private Transform sellArea;
     #endregion
 
-
     private void Awake()
     {
         ObjectManager.PlayerManager = this;
@@ -112,6 +111,7 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("SellArea"))
         {
             isSelling = false;
+            DataManager.SaveData(gemSO);
         }
 
     }
@@ -134,4 +134,5 @@ public class PlayerManager : MonoBehaviour
 
     }
     #endregion
+
 }

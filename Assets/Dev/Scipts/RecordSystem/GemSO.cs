@@ -12,9 +12,12 @@ public class GemSO : ScriptableObject
         public float startPrice;
         public Sprite Icon;
         public GameObject gemPrefab;
+        public int CollectCount;
     }
     public GemProperties[] gemProperties;
     public float minCollectSize, followSpeed, growthTime;
     public float reCreateDelay, sellDelay, sellMoveDelay;
     public GameObject gemUIPrefab;
+    [Header ("Click R for Reset Data")]
+    public float money;
 }
