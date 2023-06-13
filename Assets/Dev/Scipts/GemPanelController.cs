@@ -5,10 +5,18 @@ using UnityEngine.UI;
 
 public class GemPanelController : MonoBehaviour
 {
+    private PlayerManager playerManager;
     public GemSO gemSO;
+
+
+    private void Awake()
+    {
+        ObjectManager.GemPanelController = this;
+    }
 
     void Start()
     {
+        playerManager = ObjectManager.PlayerManager;
         CreateGemUI();
     }
 
@@ -18,10 +26,11 @@ public class GemPanelController : MonoBehaviour
         for (int i = 0; i < gemSO.gemProperties.Length; i++)
         {
             GameObject newGemUI = Instantiate(gemSO.gemUIPrefab);
-            newGemUI.transform.SetParent(transform);
+            newGemUI.transform.SetParent(transform.parent);
             newGemUI.transform.localScale = Vector3.one;
-            newGemUI.transform.localPosition = Vector3.up*(100)- (Vector3.up * i * (200));
+            newGemUI.transform.localPosition = Vector3.up*(250)- (Vector3.up * i * (200));
             newGemUI.transform.SetParent(transform.GetChild(0));
+            newGemUI.GetComponent<GemUIController>().SetGemInformation(i);
         }
     }
 

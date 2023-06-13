@@ -10,12 +10,13 @@ public class GemController : MonoBehaviour
     public GemSO.GemProperties gemProperties;
     private PlayerManager playerManager;
     private CanvasManager canvasManager;
+    private GemPanelController gemPanelController;
     [HideInInspector] public GridManager gridManager;
     #endregion
 
     #region Variables for Gem
     public GemState gemState;
-    private int followSiblingIndex;
+    private int followSiblingIndex, gemNum;
     private GameObject followObject;
     #endregion
 
@@ -24,6 +25,7 @@ public class GemController : MonoBehaviour
     {
         playerManager = ObjectManager.PlayerManager;
         canvasManager = ObjectManager.CanvasManager;
+        gemPanelController = ObjectManager.GemPanelController;
     }
 
     private void Update()
@@ -31,11 +33,12 @@ public class GemController : MonoBehaviour
         StackFollow();
     }
 
-    public void StartEvents(GridManager tempGrid, int gemNum) //Called from grid manager
+    public void StartEvents(GridManager tempGrid, int index) //Called from grid manager
     {
+        gemNum = index;
         gridManager = tempGrid;
         transform.DOScale(Vector3.one, gemSO.growthTime).SetEase(Ease.Linear).SetId(0);
-        gemProperties = gemSO.gemProperties[gemNum];
+        gemProperties = gemSO.gemProperties[index];
     }
 
     #region Collect Gem
@@ -48,7 +51,7 @@ public class GemController : MonoBehaviour
     IEnumerator WaitCollectGem()
     {
         DOTween.Kill(this.transform, false);
-        transform.SetParent(playerManager. stackedGems);
+        transform.SetParent(playerManager.stackedGems);
         followSiblingIndex = transform.GetSiblingIndex();
         if (followSiblingIndex != 0)
             followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
@@ -57,7 +60,7 @@ public class GemController : MonoBehaviour
 
         GetComponent<Collider>().enabled = false;
         transform.DOJump(followObject.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState = GemState.Collectted);
-        
+
         yield return new WaitForSeconds(gemSO.reCreateDelay);
         gridManager.CreateGem();
     }
@@ -66,10 +69,10 @@ public class GemController : MonoBehaviour
     {
         if (gemState.Equals(GemState.Collectted))
         {
-            if(followSiblingIndex.Equals(0))
+            if (followSiblingIndex.Equals(0))
                 transform.position = Vector3.Lerp(transform.position, followObject.transform.position, gemSO.followSpeed * Time.deltaTime);
             else
-                transform.position = Vector3.Lerp(transform.position, followObject.transform.position+Vector3.up* followObject.transform.localScale.y, gemSO.followSpeed * Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, followObject.transform.position + Vector3.up * followObject.transform.localScale.y, gemSO.followSpeed * Time.deltaTime);
         }
     }
     #endregion
@@ -91,6 +94,7 @@ public class GemController : MonoBehaviour
         Destroy(this.gameObject);
         canvasManager.money += gemProperties.startPrice * transform.localScale.x;
         canvasManager.SetMoney();
+        gemPanelController.transform.GetChild(0).GetChild(gemNum).GetComponent<GemUIController>().SetCountText(1);
     }
     #endregion
 }

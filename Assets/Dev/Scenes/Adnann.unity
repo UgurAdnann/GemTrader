@@ -260,8 +260,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 11.6001, y: 127.60174}
-  m_SizeDelta: {x: -100.5347, y: -641.8754}
+  m_AnchoredPosition: {x: -3.6006, y: 127.60174}
+  m_SizeDelta: {x: -70.133, y: -641.8754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &331521534
 MonoBehaviour:
@@ -424,9 +424,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1086086422}
   - {fileID: 1612500796}
   - {fileID: 1588813607}
+  - {fileID: 1086086422}
   - {fileID: 331521533}
   m_Father: {fileID: 392596335}
   m_RootOrder: 2
@@ -915,7 +915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3881087803549984436, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3881087803549984436, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1421,7 +1421,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 508924399}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1557,7 +1557,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 508924399}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1720,7 +1720,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781240021}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1820,6 +1820,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2102484996299257632, guid: 19ccbf37a4b825f4f909b41fc560920f, type: 3}
+      propertyPath: gemSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 72580b49da943544f8daf91f6a17e098, type: 2}
     - target: {fileID: 2102484996299257632, guid: 19ccbf37a4b825f4f909b41fc560920f, type: 3}
       propertyPath: joyStick
       value: 

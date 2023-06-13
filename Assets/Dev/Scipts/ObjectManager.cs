@@ -9,6 +9,7 @@ public static class ObjectManager
     public static CameraManager CameraManager;
     public static GridSpawner GridSpawner;
     public static CanvasManager CanvasManager;
+    public static GemPanelController GemPanelController;
     #endregion
 
 }

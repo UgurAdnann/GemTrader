@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     #region Variables for General
-    public GemSO gemso;
+    public GemSO gemSO;
     private CharacterManager chrManager;
     private Animator chrAnimator;
     private Transform currentGem;
@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator WaitSell()
     {
-        yield return new WaitForSeconds(gemso.sellDelay);
+        yield return new WaitForSeconds(gemSO.sellDelay);
         if (stackedGems.childCount > 0)
         {
             tempSoldGem = stackedGems.GetChild(stackedGems.childCount - 1).gameObject;

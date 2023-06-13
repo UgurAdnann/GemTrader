@@ -5,16 +5,17 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     #region Variables for General
+    private PlayerManager playerManager;
     public GemSO gemSO;
     #endregion
     #region Variables for Gem
-    public GemSO.GemProperties gemProperties;
     private int rndGem;
     private Transform gems;
     #endregion
 
     void Start()
     {
+        playerManager = ObjectManager.PlayerManager;
         gems = GameObject.FindGameObjectWithTag("Gems").transform;
         CreateGem();
     }
