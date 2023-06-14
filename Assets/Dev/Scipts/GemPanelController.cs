@@ -7,6 +7,7 @@ using DG.Tweening;
 public class GemPanelController : MonoBehaviour
 {
     private PlayerManager playerManager;
+    private CanvasManager canvasManager;
     public GemSO gemSO;
 
 
@@ -18,6 +19,7 @@ public class GemPanelController : MonoBehaviour
     void Start()
     {
         playerManager = ObjectManager.PlayerManager;
+        canvasManager=ObjectManager.CanvasManager;
         CreateGemUI();
     }
 
@@ -29,7 +31,7 @@ public class GemPanelController : MonoBehaviour
             GameObject newGemUI = Instantiate(gemSO.gemUIPrefab);
             newGemUI.transform.SetParent(transform.parent);
             newGemUI.transform.localScale = Vector3.one;
-            newGemUI.transform.localPosition = Vector3.up*(250)- (Vector3.up * i * (200));
+            newGemUI.transform.localPosition = Vector3.up*(200)- (Vector3.up * i * (170));
             newGemUI.transform.SetParent(transform.GetChild(0));
             newGemUI.GetComponent<GemUIController>().SetGemInformation(i);
         }
@@ -48,6 +50,7 @@ public class GemPanelController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         DOTween.Complete(this);
         gameObject.SetActive(false);
+        canvasManager.gemUIBUtton.SetActive(true);
     }
 
     public void OpenGemPanel()
@@ -56,6 +59,7 @@ public class GemPanelController : MonoBehaviour
     }
     IEnumerator WaitOpenGemPanel()
     {
+        canvasManager.gemUIBUtton.SetActive(false);
         transform.DOScale(Vector3.one*1.2f, 0.5f).SetId(3);
         yield return new WaitForSeconds(0.5f);
         DOTween.Complete(3);

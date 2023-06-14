@@ -17,12 +17,12 @@ MonoBehaviour:
     startPrice: 80
     Icon: {fileID: 21300000, guid: b38054b2c0a840745acf2a65d9aebaeb, type: 3}
     gemPrefab: {fileID: 1250575752777289632, guid: 15d543f40dbc7614e88c5158e5ede614, type: 3}
-    CollectCount: 0
+    CollectCount: 6
   - name: Pink Gem
     startPrice: 100
     Icon: {fileID: 21300000, guid: d73d049919889f946adb3621faf72044, type: 3}
     gemPrefab: {fileID: 7881072463234562723, guid: a7d51ca4a2b382647a40118d2c9c8dfa, type: 3}
-    CollectCount: 0
+    CollectCount: 5
   - name: Yellow Gem
     startPrice: 120
     Icon: {fileID: 21300000, guid: 46d250cb66cd4c843bedf5e6ad4d9684, type: 3}
@@ -35,4 +35,4 @@ MonoBehaviour:
   sellDelay: 0.1
   sellMoveDelay: 0.25
   gemUIPrefab: {fileID: 3287377097788397153, guid: bf2ee28e57fb3324d8eea39d82394b71, type: 3}
-  money: 0
+  money: 499.39978

@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1360991219368177298, guid: 5aae1d9cb25b5b34dba7bf5e3931378d, type: 3}
+  - {fileID: 2100000, guid: 3adfa10d2cf82dd45928a0ec84868e67, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,6 +135,9 @@ MonoBehaviour:
     startPrice: 0
     Icon: {fileID: 0}
     gemPrefab: {fileID: 0}
+    CollectCount: 0
+  gridManager: {fileID: 0}
+  gemState: 0
 --- !u!65 &6045439228644804729
 BoxCollider:
   m_ObjectHideFlags: 0

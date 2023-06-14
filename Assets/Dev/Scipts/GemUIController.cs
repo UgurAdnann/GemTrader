@@ -23,7 +23,7 @@ public class GemUIController : MonoBehaviour
     {
         index = gemNum;
         transform.GetChild(0).GetComponent<Image>().sprite = gemSO.gemProperties[index].Icon;
-        transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Type: " + gemSO.gemProperties[index].name.ToString();
+        transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Type: " + gemSO.gemProperties[index].name.ToString();
         collectCount = gemSO.gemProperties[index].CollectCount;
         transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Count: " + collectCount;
     }

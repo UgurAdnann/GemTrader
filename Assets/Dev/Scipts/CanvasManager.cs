@@ -9,6 +9,7 @@ public class CanvasManager : MonoBehaviour
     public GemSO gemSO;
     public float money;
     public TMPro.TextMeshProUGUI moneyText;
+    public GameObject gemUIBUtton;
 
     private void Awake()
     {
