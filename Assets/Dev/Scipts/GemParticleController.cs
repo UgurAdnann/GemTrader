@@ -25,5 +25,4 @@ public class GemParticleController : MonoBehaviour
         transform.localPosition = Vector3.zero;
         particleSpawner.gemPrtcQue.Enqueue(gameObject);
     }
-
 }

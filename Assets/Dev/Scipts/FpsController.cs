@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class FpsController : MonoBehaviour
 {
+    #region Variables for Calculate FPS
     public float pollingTime;
     private float time;
     private int frameCount;
     private TMPro.TextMeshProUGUI fpsText;
+    #endregion
 
+    #region Variables for Limit FPS
     public enum Limits
     {
         noLimit = 0, 
@@ -17,21 +20,26 @@ public class FpsController : MonoBehaviour
         limit120 = 120,
         limit240 = 240,
     }
+
     public Limits limit;
+    #endregion
+
+    private void Awake()
+    {
+        Application.targetFrameRate = (int)limit; //Limit Fps
+    }
 
     void Start()
     {
         fpsText = GetComponent<TMPro.TextMeshProUGUI>();
     }
 
-
-    private void Awake()
+    void Update()
     {
-        Application.targetFrameRate = (int)limit;
+        CalculateFPS();
     }
 
-
-    void Update()
+    private void CalculateFPS()
     {
         time += Time.deltaTime;
         frameCount++;
@@ -43,5 +51,4 @@ public class FpsController : MonoBehaviour
             frameCount = 0;
         }
     }
-
 }

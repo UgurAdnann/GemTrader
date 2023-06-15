@@ -4,20 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GemUIController : MonoBehaviour
 {
+    #region Variables for General
     public GemSO gemSO;
-    private PlayerManager playerManager;
+    #endregion
+
+    #region Variables for Gem
     public int collectCount;
     private int index;
-
-    void Start()
-    {
-        playerManager = ObjectManager.PlayerManager;
-    }
-
-    void Update()
-    {
-
-    }
+    #endregion
 
     public void SetGemInformation(int gemNum)
     {
@@ -33,6 +27,5 @@ public class GemUIController : MonoBehaviour
         collectCount += addValue;
         gemSO.gemProperties[index].CollectCount = collectCount;
         transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Gem Count: " + collectCount;
-
     }
 }

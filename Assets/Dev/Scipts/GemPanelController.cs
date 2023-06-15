@@ -6,10 +6,10 @@ using DG.Tweening;
 
 public class GemPanelController : MonoBehaviour
 {
-    private PlayerManager playerManager;
+    #region Variables for General
     private CanvasManager canvasManager;
     public GemSO gemSO;
-
+    #endregion
 
     private void Awake()
     {
@@ -18,7 +18,6 @@ public class GemPanelController : MonoBehaviour
 
     void Start()
     {
-        playerManager = ObjectManager.PlayerManager;
         canvasManager=ObjectManager.CanvasManager;
         CreateGemUI();
     }

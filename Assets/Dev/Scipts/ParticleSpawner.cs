@@ -5,7 +5,6 @@ using UnityEngine;
 public class ParticleSpawner : MonoBehaviour
 {
     public GemSO gemSO;
-    private GameObject gemPrtc;
     public int gemPrtcPoolCount;
     public Queue<GameObject> gemPrtcQue = new Queue<GameObject>();
 

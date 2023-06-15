@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
+    #region Variables for General
     private GemPanelController gemPanelController;
     public GemSO gemSO;
+    #endregion
+
+    #region Variables for UI
     public float money;
     public TMPro.TextMeshProUGUI moneyText;
     public GameObject gemUIBUtton;
+    #endregion
 
     private void Awake()
     {
@@ -19,17 +24,14 @@ public class CanvasManager : MonoBehaviour
     {
         money = gemSO.money;
         gemPanelController = ObjectManager.GemPanelController;
-        SetMoney();
-    }
 
-    void Update()
-    {
-        
+        SetMoney();
     }
 
     public void  SetMoney()
     {
         gemSO.money = money;
+
         if(money==0)
             moneyText.text = "Money: " + 0 + "$";
         else

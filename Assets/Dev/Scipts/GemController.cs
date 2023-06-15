@@ -55,6 +55,7 @@ public class GemController : MonoBehaviour
             DOTween.Kill(this.transform, false);
             transform.SetParent(playerManager.stackedGems);
             followSiblingIndex = transform.GetSiblingIndex();
+           
             if (followSiblingIndex != 0)
                 followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
             else

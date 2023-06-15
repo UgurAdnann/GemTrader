@@ -13,14 +13,4 @@ public class CharacterManager : MonoBehaviour
         animator = GetComponent<Animator>();
         ObjectManager.ChrManager = this;
     }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

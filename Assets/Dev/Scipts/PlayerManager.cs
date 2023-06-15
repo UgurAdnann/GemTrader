@@ -8,7 +8,6 @@ public class PlayerManager : MonoBehaviour
     public GemSO gemSO;
     private CharacterManager chrManager;
     private Animator chrAnimator;
-    private Transform currentGem;
     [HideInInspector] public GameObject stackPos;
     #endregion
 
@@ -119,7 +118,6 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region Numerators
-
     IEnumerator WaitSell()
     {
         yield return new WaitForSeconds(gemSO.sellDelay);
@@ -132,7 +130,6 @@ public class PlayerManager : MonoBehaviour
             else
                 StopCoroutine(sellCoroutine);
         }
-
     }
     #endregion
 
