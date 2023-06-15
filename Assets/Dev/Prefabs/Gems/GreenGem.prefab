@@ -138,6 +138,7 @@ MonoBehaviour:
     CollectCount: 0
   gridManager: {fileID: 0}
   gemState: 0
+  rotateSpeed: 5
 --- !u!65 &6045439228644804729
 BoxCollider:
   m_ObjectHideFlags: 0

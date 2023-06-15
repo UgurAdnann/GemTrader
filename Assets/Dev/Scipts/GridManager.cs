@@ -22,6 +22,11 @@ public class GridManager : MonoBehaviour
 
     public void CreateGem()
     {
+        StartCoroutine(WaitCreateGem());
+    }
+    private IEnumerator WaitCreateGem()
+    {
+        yield return new WaitForSeconds(Random.Range(0.1f, 1.5f));
         rndGem = Random.Range(0, gemSO.gemProperties.Length);
         GameObject newGem = Instantiate(gemSO.gemProperties[rndGem].gemPrefab);
         newGem.transform.SetParent(gems);

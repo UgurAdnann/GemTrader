@@ -97,7 +97,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.CompareTag("Gem"))
         {
-            other.GetComponent<GemController>().CollectGem();
+            if (other.GetComponent<GemController>().gemState.Equals(GemState.Grid))
+                other.GetComponent<GemController>().CollectGem();
         }
         if (other.CompareTag("SellArea"))
         {

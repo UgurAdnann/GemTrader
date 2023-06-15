@@ -10,6 +10,7 @@ public static class ObjectManager
     public static GridSpawner GridSpawner;
     public static CanvasManager CanvasManager;
     public static GemPanelController GemPanelController;
+    public static ParticleSpawner ParticleSpawner;
     #endregion
 
 }

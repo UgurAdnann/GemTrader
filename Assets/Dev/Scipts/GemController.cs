@@ -11,6 +11,7 @@ public class GemController : MonoBehaviour
     private PlayerManager playerManager;
     private CanvasManager canvasManager;
     private GemPanelController gemPanelController;
+    private ParticleSpawner particleSpawner;
     [HideInInspector] public GridManager gridManager;
     #endregion
 
@@ -18,6 +19,8 @@ public class GemController : MonoBehaviour
     public GemState gemState;
     private int followSiblingIndex, gemNum;
     private GameObject followObject;
+    private bool isGrowUp, isCanRotate;
+    private GameObject tempPrtc;
     #endregion
 
 
@@ -26,18 +29,20 @@ public class GemController : MonoBehaviour
         playerManager = ObjectManager.PlayerManager;
         canvasManager = ObjectManager.CanvasManager;
         gemPanelController = ObjectManager.GemPanelController;
+        particleSpawner = ObjectManager.ParticleSpawner;
     }
 
     private void Update()
     {
         StackFollow();
+        DoRotate();
     }
 
     public void StartEvents(GridManager tempGrid, int index) //Called from grid manager
     {
         gemNum = index;
         gridManager = tempGrid;
-        transform.DOScale(Vector3.one, gemSO.growthTime).SetEase(Ease.Linear).SetId(0);
+        transform.DOScale(Vector3.one, gemSO.growthTime).SetEase(Ease.Linear).SetId(0).OnStepComplete(() => SetGrowUpEvents());
         gemProperties = gemSO.gemProperties[index];
     }
 
@@ -45,24 +50,20 @@ public class GemController : MonoBehaviour
     public void CollectGem()
     {
         if (transform.localScale.x >= gemSO.minCollectSize)
-            StartCoroutine(WaitCollectGem());
-    }
+        {
+            transform.GetComponent<Collider>().enabled = false;
+            DOTween.Kill(this.transform, false);
+            transform.SetParent(playerManager.stackedGems);
+            followSiblingIndex = transform.GetSiblingIndex();
+            if (followSiblingIndex != 0)
+                followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
+            else
+                followObject = playerManager.stackPos;
 
-    IEnumerator WaitCollectGem()
-    {
-        DOTween.Kill(this.transform, false);
-        transform.SetParent(playerManager.stackedGems);
-        followSiblingIndex = transform.GetSiblingIndex();
-        if (followSiblingIndex != 0)
-            followObject = transform.parent.GetChild(followSiblingIndex - 1).gameObject;
-        else
-            followObject = playerManager.stackPos;
+            transform.DOJump(followObject.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState = GemState.Collectted);
 
-        GetComponent<Collider>().enabled = false;
-        transform.DOJump(followObject.transform.position, 3, 0, 0.2f).OnStepComplete(() => gemState = GemState.Collectted);
-
-        yield return new WaitForSeconds(gemSO.reCreateDelay);
-        gridManager.CreateGem();
+            gridManager.CreateGem();
+        }
     }
 
     private void StackFollow()
@@ -97,4 +98,21 @@ public class GemController : MonoBehaviour
         gemPanelController.transform.GetChild(0).GetChild(gemNum).GetComponent<GemUIController>().SetCountText(1);
     }
     #endregion
+
+    private void SetGrowUpEvents()
+    {
+        if (!isGrowUp)
+        {
+            tempPrtc = particleSpawner.gemPrtcQue.Dequeue();
+            tempPrtc.GetComponent<GemParticleController>().OpenParticle(transform);
+            isCanRotate = true;
+            isGrowUp = true;
+        }
+    }
+
+    private void DoRotate()
+    {
+        if (isCanRotate && gemState.Equals(GemState.Grid))
+            transform.GetChild(0).Rotate(Vector3.up * gemSO.rotateSpeed * Time.deltaTime);
+    }
 }
